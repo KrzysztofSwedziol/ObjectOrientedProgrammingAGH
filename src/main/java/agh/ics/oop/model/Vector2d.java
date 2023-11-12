@@ -31,6 +31,7 @@ public class Vector2d {
         }
         return false;
     }
+
     public Vector2d add(Vector2d other){
         Vector2d new_vector = new Vector2d(this.x + other.x, this.y + other.y);
         return new_vector;
@@ -40,6 +41,8 @@ public class Vector2d {
         Vector2d new_vector = new Vector2d(this.x - other.x, this.y-other.y);
         return new_vector;
     }
+
+
     public Vector2d upperRight(Vector2d other){
         return new Vector2d(Math.max(other.x, this.x), Math.max(other.y, this.y));
     }

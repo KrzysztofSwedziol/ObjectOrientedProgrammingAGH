@@ -1,4 +1,8 @@
 package agh.ics.oop.model;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 
 public class MapDirectionTest {
     MapDirection vect1 = MapDirection.NORTH;
@@ -8,17 +12,17 @@ public class MapDirectionTest {
 
     @Test
     public void nextTest(){
-        System.out.println(vect1.next());
-        System.out.println(vect2.next());
-        System.out.println(vect3.next());
-        System.out.println(vect4.next());
+        assertEquals(vect1.next(), MapDirection.EAST);
+        assertEquals(vect2.next(), MapDirection.WEST);
+        assertEquals(vect3.next(), MapDirection.NORTH);
+        assertEquals(vect4.next(), MapDirection.SOUTH);
     }
     @Test
     public void prevTest(){
-        System.out.println(vect1.previous());
-        System.out.println(vect2.previous());
-        System.out.println(vect3.previous());
-        System.out.println(vect4.previous());
+        assertEquals(vect1.previous(), MapDirection.WEST);
+        assertEquals(vect2.previous(), MapDirection.EAST);
+        assertEquals(vect3.previous(), MapDirection.SOUTH);
+        assertEquals(vect4.previous(), MapDirection.NORTH);
     }
 
 
