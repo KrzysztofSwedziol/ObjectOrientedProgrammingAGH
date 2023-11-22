@@ -12,49 +12,58 @@ public class SimulationTest {
     @Test
     public void testOrientation(){
         Animal animal = new Animal();
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.LEFT);
+        WorldMap map = new RectangularMap(4, 4);
+        map.place(animal);
+        MoveValidator validator = new RectangularMapMoveValidator(map);
+        animal.move(MoveDirection.RIGHT, validator);
+        animal.move(MoveDirection.RIGHT, validator);
+        animal.move(MoveDirection.RIGHT, validator);
+        animal.move(MoveDirection.RIGHT, validator);
+        animal.move(MoveDirection.RIGHT, validator);
+        animal.move(MoveDirection.LEFT, validator);
         assertEquals(MapDirection.NORTH, animal.getOrientation());
 
     }
     @Test
     public void testPosition(){
         Animal animal = new Animal();
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.BACKWARD);
+        WorldMap map = new RectangularMap(5, 5);
+        map.place(animal);
+        MoveValidator validator = new RectangularMapMoveValidator(map);
+        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD, validator);
         animal.isAt(new Vector2d(2,3));
     }
     @Test
     public void testMapBoundary(){
         Animal animal = new Animal();
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.FORWARD);
+        WorldMap map = new RectangularMap(4, 4);
+        map.place(animal);
+        MoveValidator validator = new RectangularMapMoveValidator(map);
+        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.FORWARD, validator);
         animal.isAt(new Vector2d(2,4));
-        animal.move(MoveDirection.BACKWARD);
-        animal.move(MoveDirection.BACKWARD);
-        animal.move(MoveDirection.BACKWARD);
-        animal.move(MoveDirection.BACKWARD);
-        animal.move(MoveDirection.BACKWARD);
+        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD, validator);
         animal.isAt(new Vector2d(2, 0));
-        animal.move(MoveDirection.RIGHT);
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.FORWARD);
-        animal.move(MoveDirection.FORWARD);
+        map.move(animal, MoveDirection.RIGHT, validator);
+        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.FORWARD, validator);
         animal.isAt(new Vector2d(4, 0));
-        animal.move(MoveDirection.BACKWARD);
-        animal.move(MoveDirection.BACKWARD);
-        animal.move(MoveDirection.BACKWARD);
-        animal.move(MoveDirection.BACKWARD);
-        animal.move(MoveDirection.BACKWARD);
+        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD, validator);
         animal.isAt(new Vector2d(0,0));
 
     }
