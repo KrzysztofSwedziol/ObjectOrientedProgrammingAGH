@@ -22,9 +22,8 @@ public class RectangularMapTest {
     public void moveTest(){
         RectangularMap map = new RectangularMap(6, 4);
         Animal animal = new Animal();
-        MoveValidator validator = new RectangularMapMoveValidator(map);
         map.place(animal);
-        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.FORWARD);
         assertEquals(animal.getPosition(), new Vector2d(2, 3));
     }
     @Test
@@ -32,7 +31,6 @@ public class RectangularMapTest {
         RectangularMap map = new RectangularMap(6, 4);
         Animal animal = new Animal();
         Animal animal2 = new Animal();
-        MoveValidator validator = new RectangularMapMoveValidator(map);
         assertEquals(map.canMoveTo(new Vector2d(2,2)), true);
         map.place(animal);
         assertEquals(map.canMoveTo(new Vector2d(2, 2)), false);

@@ -14,13 +14,12 @@ public class SimulationTest {
         Animal animal = new Animal();
         WorldMap map = new RectangularMap(4, 4);
         map.place(animal);
-        MoveValidator validator = new RectangularMapMoveValidator(map);
-        animal.move(MoveDirection.RIGHT, validator);
-        animal.move(MoveDirection.RIGHT, validator);
-        animal.move(MoveDirection.RIGHT, validator);
-        animal.move(MoveDirection.RIGHT, validator);
-        animal.move(MoveDirection.RIGHT, validator);
-        animal.move(MoveDirection.LEFT, validator);
+        animal.move(MoveDirection.RIGHT, map);
+        animal.move(MoveDirection.RIGHT, map);
+        animal.move(MoveDirection.RIGHT, map);
+        animal.move(MoveDirection.RIGHT, map);
+        animal.move(MoveDirection.RIGHT, map);
+        animal.move(MoveDirection.LEFT, map);
         assertEquals(MapDirection.NORTH, animal.getOrientation());
 
     }
@@ -29,10 +28,9 @@ public class SimulationTest {
         Animal animal = new Animal();
         WorldMap map = new RectangularMap(5, 5);
         map.place(animal);
-        MoveValidator validator = new RectangularMapMoveValidator(map);
-        map.move(animal, MoveDirection.FORWARD, validator);
-        map.move(animal, MoveDirection.FORWARD, validator);
-        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.FORWARD);
+        map.move(animal, MoveDirection.FORWARD);
+        map.move(animal, MoveDirection.BACKWARD);
         animal.isAt(new Vector2d(2,3));
     }
     @Test
@@ -40,30 +38,29 @@ public class SimulationTest {
         Animal animal = new Animal();
         WorldMap map = new RectangularMap(4, 4);
         map.place(animal);
-        MoveValidator validator = new RectangularMapMoveValidator(map);
-        map.move(animal, MoveDirection.FORWARD, validator);
-        map.move(animal, MoveDirection.FORWARD, validator);
-        map.move(animal, MoveDirection.FORWARD, validator);
-        map.move(animal, MoveDirection.FORWARD, validator);
-        map.move(animal, MoveDirection.FORWARD, validator);
-        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.FORWARD);
+        map.move(animal, MoveDirection.FORWARD);
+        map.move(animal, MoveDirection.FORWARD);
+        map.move(animal, MoveDirection.FORWARD);
+        map.move(animal, MoveDirection.FORWARD);
+        map.move(animal, MoveDirection.FORWARD);
         animal.isAt(new Vector2d(2,4));
-        map.move(animal, MoveDirection.BACKWARD, validator);
-        map.move(animal, MoveDirection.BACKWARD, validator);
-        map.move(animal, MoveDirection.BACKWARD, validator);
-        map.move(animal, MoveDirection.BACKWARD, validator);
-        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD);
+        map.move(animal, MoveDirection.BACKWARD);
+        map.move(animal, MoveDirection.BACKWARD);
+        map.move(animal, MoveDirection.BACKWARD);
+        map.move(animal, MoveDirection.BACKWARD);
         animal.isAt(new Vector2d(2, 0));
-        map.move(animal, MoveDirection.RIGHT, validator);
-        map.move(animal, MoveDirection.FORWARD, validator);
-        map.move(animal, MoveDirection.FORWARD, validator);
-        map.move(animal, MoveDirection.FORWARD, validator);
+        map.move(animal, MoveDirection.RIGHT);
+        map.move(animal, MoveDirection.FORWARD);
+        map.move(animal, MoveDirection.FORWARD);
+        map.move(animal, MoveDirection.FORWARD);
         animal.isAt(new Vector2d(4, 0));
-        map.move(animal, MoveDirection.BACKWARD, validator);
-        map.move(animal, MoveDirection.BACKWARD, validator);
-        map.move(animal, MoveDirection.BACKWARD, validator);
-        map.move(animal, MoveDirection.BACKWARD, validator);
-        map.move(animal, MoveDirection.BACKWARD, validator);
+        map.move(animal, MoveDirection.BACKWARD);
+        map.move(animal, MoveDirection.BACKWARD);
+        map.move(animal, MoveDirection.BACKWARD);
+        map.move(animal, MoveDirection.BACKWARD);
+        map.move(animal, MoveDirection.BACKWARD);
         animal.isAt(new Vector2d(0,0));
 
     }

@@ -11,11 +11,6 @@ public class World {
         run(directions);
         System.out.println("system zakończył działanie");
 
-
-        Animal animal = new Animal();
-        System.out.println(animal);
-
-
     }
     public static void run(List<MoveDirection> directions) {
         /*
@@ -37,10 +32,19 @@ public class World {
         }
 
          */
+        /*
         List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        WorldMap map = new RectangularMap(6,4);
+        WorldMap map = new GrassField(10);
         Simulation simulation = new Simulation(positions, directions, map);
         simulation.run();
-
+    */
+        WorldMap map = new GrassField(10);
+        Animal animal1 = new Animal();
+        Animal animal2 = new Animal(new Vector2d(3, 4));
+        map.place(animal2);
+        map.place(animal1);
+        System.out.println(map);
+        System.out.println(map.getElements());
     }
+
 }

@@ -2,6 +2,7 @@ package agh.ics.oop.model;
 
 import agh.ics.oop.model.MoveDirection;
 import agh.ics.oop.model.Vector2d;
+import java.util.Collection;
 
 /**
  * The interface responsible for interacting with the map of the world.
@@ -23,7 +24,7 @@ public interface WorldMap extends MoveValidator {
      * Moves an animal (if it is present on the map) according to specified direction.
      * If the move is not possible, this method has no effect.
      */
-    void move(Animal animal, MoveDirection direction, MoveValidator moveValidator);
+    void move(Animal animal, MoveDirection direction);
 
     /**
      * Return true if given position on the map is occupied. Should not be
@@ -41,5 +42,7 @@ public interface WorldMap extends MoveValidator {
      * @param position The position of the animal.
      * @return animal or null if the position is not occupied.
      */
-    Animal objectAt(Vector2d position);
+    WorldElement objectAt(Vector2d position);
+
+    Collection<WorldElement> getElements();
 }

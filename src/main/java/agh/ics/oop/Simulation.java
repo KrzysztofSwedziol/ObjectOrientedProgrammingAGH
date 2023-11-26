@@ -19,11 +19,9 @@ public class Simulation {
     }
     public void run(){
         int AnSize = animals.size();
-        MoveValidator moveValidator = new RectangularMapMoveValidator(map);
         for(int i = 0; i < directions.size(); i++){
             Animal animal = animals.get(i%AnSize);
-            map.move(animal, directions.get(i), moveValidator);
-            animal.move(directions.get(i), moveValidator);
+            map.move(animal, directions.get(i));
             System.out.println("Zwierzę " + (i % AnSize) + ": " + animal);
 
         }
