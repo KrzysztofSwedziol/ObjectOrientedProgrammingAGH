@@ -1,8 +1,11 @@
-package agh.ics.oop.model;
+package agh.ics.oop;
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+
+import agh.ics.oop.model.*;
+import org.junit.Assert;
 import org.junit.Test;
 import agh.ics.oop.OptionsParser;
 
@@ -20,7 +23,7 @@ public class SimulationTest {
         animal.move(MoveDirection.RIGHT, map);
         animal.move(MoveDirection.RIGHT, map);
         animal.move(MoveDirection.LEFT, map);
-        assertEquals(MapDirection.NORTH, animal.getOrientation());
+        Assert.assertEquals(MapDirection.NORTH, animal.getOrientation());
 
     }
     @Test
