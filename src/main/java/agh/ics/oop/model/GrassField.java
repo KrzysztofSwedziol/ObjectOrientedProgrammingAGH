@@ -9,6 +9,7 @@ public class GrassField extends AbstractWorldMap implements WorldMap{
     private int amount;
     private int grassWidth;
     private int grassHeight;
+    private Boundary boundary;
     //private Map<Vector2d, Animal> animals = new HashMap<>();
     //private int width;
     //private int height;
@@ -20,6 +21,8 @@ public class GrassField extends AbstractWorldMap implements WorldMap{
         this.width = Integer.MAX_VALUE;
         this.height = Integer.MAX_VALUE;
         placeGrass();
+        this.mapVisualizer = new MapVisualizer(this);
+        boundary = new Boundary(new Vector2d(0, 0), new Vector2d(width-1, height-1));
     }
 
     /*public boolean place(Animal animal) {
@@ -36,7 +39,7 @@ public class GrassField extends AbstractWorldMap implements WorldMap{
         while(i < this.amount){
             int x = rand.nextInt(grassHeight);
             int y = rand.nextInt(grassWidth);
-            if(!isOccupied(new Vector2d(x, y))){
+            if(objectAt(new Vector2d(x, y)) == null){
                 Vector2d position = new Vector2d(x, y);
                 this.grass.put(position, new Grass(position));
                 i+=1;
@@ -74,7 +77,34 @@ public class GrassField extends AbstractWorldMap implements WorldMap{
             return null;
         }
     }
-    @Override
+    public Boundary getCurrentBounds(){
+        int min_x = Integer.MAX_VALUE;
+        int min_y = Integer.MAX_VALUE;
+        int max_x = 0;
+        int max_y = 0;
+        for(Vector2d position : animals.keySet()){
+            int x = position.getX();
+            int y = position.getY();
+            min_x = Math.min(min_x, x);
+            min_y = Math.min(min_y, y);
+            max_x = Math.max(max_x, x);
+            max_y = Math.max(max_y, y);
+        }
+        for(Vector2d position : grass.keySet()){
+            int x = position.getX();
+            int y = position.getY();
+            min_x = Math.min(min_x, x);
+            min_y = Math.min(min_y, y);
+            max_x = Math.max(max_x, x);
+            max_y = Math.max(max_y, y);
+        }
+        Vector2d lowerLeft = new Vector2d(min_x, min_y);
+        Vector2d upperRight = new Vector2d(max_x, max_y);
+        boundary = new Boundary(new Vector2d(min_x, min_y), new Vector2d(max_x, max_y));
+        return boundary;
+
+    }
+    /*@Override
     public String toString() {
         MapVisualizer visualizer = new MapVisualizer(this);
         int min_x = Integer.MAX_VALUE;
@@ -99,8 +129,10 @@ public class GrassField extends AbstractWorldMap implements WorldMap{
         }
         Vector2d lowerLeft = new Vector2d(min_x, min_y);
         Vector2d upperRight = new Vector2d(max_x, max_y);
-        return visualizer.draw(lowerLeft, upperRight);
-    }
+
+
+        return this.mapVisualizer.draw(getCurrentBounds().lowerLeft(), getCurrentBounds().upperRight());
+    }*/
     public Map<Vector2d, Grass> getGrass(){
         return grass;
     }
@@ -108,8 +140,8 @@ public class GrassField extends AbstractWorldMap implements WorldMap{
         this.grass.put(gra.getPosition(), gra);
     }
     public Collection<WorldElement> getElements(){
-        super.getElements();
         worldElements.addAll(grass.values());
+        super.getElements();
         return worldElements;
     }
 }

@@ -32,12 +32,22 @@ public class GrassFieldTest {
         Animal animal2 = new Animal(new Vector2d(3,4));
         Grass grass = new Grass(new Vector2d(6,7));
         Grass grass2 = new Grass(new Vector2d(3, 4));
-        map.place(animal);
-        assertEquals(map.objectAt(new Vector2d(1,2)), animal);
-        map.place(animal2);
-        map.setGrass(grass);
-        assertEquals(map.getGrass().get(new Vector2d(6,7)), grass);
+        try{
+            map.place(animal);
+            assertEquals(map.objectAt(new Vector2d(1,2)), animal);
+            map.place(animal2);
+            map.setGrass(grass);
+            assertEquals(map.getGrass().get(new Vector2d(6,7)), grass);
+        }catch(PositionAlreadyOccupiedException e){
+
+        }
         map.setGrass(grass2);
         assertEquals(map.objectAt(new Vector2d(3, 4)), animal2); //Testing if animal has priority over grass
+        Animal animal3 = new Animal(new Vector2d(1, 2));
+        try{
+            map.place(animal3);
+        }catch(PositionAlreadyOccupiedException e2){
+
+        }
     }
 }

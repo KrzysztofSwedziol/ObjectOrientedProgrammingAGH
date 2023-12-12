@@ -3,18 +3,26 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import agh.ics.oop.model.util.MapVisualizer;
+import java.util.List;
+import java.util.ArrayList;
 
 abstract class AbstractWorldMap implements WorldMap {
     protected Map<Vector2d, Animal> animals = new HashMap<>();
     protected Collection<WorldElement> worldElements = new ArrayList<>();
+    protected MapVisualizer mapVisualizer;
     protected int width;
     protected int height;
-    public boolean place(Animal animal) {
-        if (canMoveTo(animal.getPosition())) {
-            this.animals.put(animal.getPosition(), animal);
+    protected List<MapChangeListener> observers = new ArrayList<>();
+    public boolean place(Animal animal) throws PositionAlreadyOccupiedException {
+        Vector2d position = animal.getPosition();
+        if ((objectAt(position) instanceof Animal) == false) {
+            this.animals.put(position, animal);
+            mapChanged(animal + " placed at " + position);
             return true;
+        } else {
+            throw new PositionAlreadyOccupiedException(position);
         }
-        return false;
     }
     public void move(Animal animal, MoveDirection direction) {
         Vector2d oldPosition = animal.getPosition();
@@ -24,7 +32,9 @@ abstract class AbstractWorldMap implements WorldMap {
             animal.move(direction, this);
             animals.remove(oldPosition);
             animals.put(animal.getPosition(), animal);
+            mapChanged(animal + " Moved to " + direction);
         }
+
     }
     public boolean canMoveTo(Vector2d position){
         return position.follows(new Vector2d(this.width, this.height)) &&
@@ -39,5 +49,24 @@ abstract class AbstractWorldMap implements WorldMap {
         worldElements.addAll(animals.values());
 
         return worldElements;
+    }
+
+    public abstract Boundary getCurrentBounds();
+    @Override
+    public final String toString(){
+        MapVisualizer vizualizer = new MapVisualizer(this);
+        Boundary boundary = getCurrentBounds();
+        return  vizualizer.draw(boundary.lowerLeft(), boundary.upperRight());
+    }
+    public void registerObserver(MapChangeListener observer){
+        observers.add(observer);
+    }
+    public void unregisterObserver(MapChangeListener observer){
+        observers.remove(observer);
+    }
+    public void mapChanged(String message){
+        for(MapChangeListener observer : observers){
+            observer.mapChanged(this, message);
+        }
     }
 }

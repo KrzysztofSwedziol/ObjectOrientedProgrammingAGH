@@ -12,9 +12,13 @@ public class Simulation {
         this.directions = directions;
         this.animals = new ArrayList<>();
         for (Vector2d position : positions) {
-            Animal animal = new Animal(position);
-            this.animals.add(animal);
-            map.place(animal);
+            try {
+                Animal animal = new Animal(position);
+                this.animals.add(animal);
+                map.place(animal);
+            }catch (PositionAlreadyOccupiedException er){
+                System.out.println("Can't place animal at position : " + position + " " + er.getMessage());
+            }
         }
     }
     public void run(){
@@ -22,7 +26,7 @@ public class Simulation {
         for(int i = 0; i < directions.size(); i++){
             Animal animal = animals.get(i%AnSize);
             map.move(animal, directions.get(i));
-            System.out.println("Zwierzę " + (i % AnSize) + ": " + animal);
+            //System.out.println("Zwierzę " + (i % AnSize) + ": " + animal);
 
         }
     }

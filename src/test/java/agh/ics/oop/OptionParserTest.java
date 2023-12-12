@@ -1,11 +1,10 @@
 package agh.ics.oop;
 
-import agh.ics.oop.OptionsParser;
 import agh.ics.oop.model.MoveDirection;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class OptionParserTest {
     @Test

@@ -33,6 +33,8 @@ public class Animal implements WorldElement {
                     this.position = newPositionBack;
                 }
                 break;
+            //default:
+                //throw new IllegalArgumentException(direction + " is not a legal move specification.");
         }
     }
     @Override

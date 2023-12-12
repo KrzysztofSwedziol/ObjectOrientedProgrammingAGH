@@ -1,4 +1,6 @@
 package agh.ics.oop;
+
+
 import agh.ics.oop.OptionsParser;
 import agh.ics.oop.Simulation;
 import static org.junit.Assert.assertEquals;
@@ -6,7 +8,7 @@ import static org.junit.Assert.assertNotEquals;
 
 import agh.ics.oop.model.*;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import agh.ics.oop.OptionsParser;
 
 import java.util.List;
@@ -16,7 +18,11 @@ public class SimulationTest {
     public void testOrientation(){
         Animal animal = new Animal();
         WorldMap map = new RectangularMap(4, 4);
-        map.place(animal);
+        try{
+            map.place(animal);
+        }catch(PositionAlreadyOccupiedException e){
+
+        }
         animal.move(MoveDirection.RIGHT, map);
         animal.move(MoveDirection.RIGHT, map);
         animal.move(MoveDirection.RIGHT, map);
@@ -30,7 +36,11 @@ public class SimulationTest {
     public void testPosition(){
         Animal animal = new Animal();
         WorldMap map = new RectangularMap(5, 5);
-        map.place(animal);
+        try{
+            map.place(animal);
+        }catch(PositionAlreadyOccupiedException e){
+
+        }
         map.move(animal, MoveDirection.FORWARD);
         map.move(animal, MoveDirection.FORWARD);
         map.move(animal, MoveDirection.BACKWARD);
@@ -40,7 +50,11 @@ public class SimulationTest {
     public void testMapBoundary(){
         Animal animal = new Animal();
         WorldMap map = new RectangularMap(4, 4);
-        map.place(animal);
+        try{
+            map.place(animal);
+        }catch(PositionAlreadyOccupiedException e){
+
+        }
         map.move(animal, MoveDirection.FORWARD);
         map.move(animal, MoveDirection.FORWARD);
         map.move(animal, MoveDirection.FORWARD);
