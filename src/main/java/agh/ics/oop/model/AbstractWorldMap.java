@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.ArrayList;
 import agh.ics.oop.model.util.MapVisualizer;
 import java.util.List;
-import java.util.ArrayList;
 
 abstract class AbstractWorldMap implements WorldMap {
     protected Map<Vector2d, Animal> animals = new HashMap<>();
@@ -14,6 +13,7 @@ abstract class AbstractWorldMap implements WorldMap {
     protected int width;
     protected int height;
     protected List<MapChangeListener> observers = new ArrayList<>();
+    protected int ID;
     public boolean place(Animal animal) throws PositionAlreadyOccupiedException {
         Vector2d position = animal.getPosition();
         if ((objectAt(position) instanceof Animal) == false) {
@@ -59,14 +59,19 @@ abstract class AbstractWorldMap implements WorldMap {
         return  vizualizer.draw(boundary.lowerLeft(), boundary.upperRight());
     }
     public void registerObserver(MapChangeListener observer){
+
         observers.add(observer);
     }
     public void unregisterObserver(MapChangeListener observer){
+
         observers.remove(observer);
     }
     public void mapChanged(String message){
         for(MapChangeListener observer : observers){
             observer.mapChanged(this, message);
         }
+    }
+    public int getID(){
+        return this.ID;
     }
 }

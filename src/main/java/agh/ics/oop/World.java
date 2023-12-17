@@ -17,78 +17,69 @@ public class World {
         run(directions);
         System.out.println("system zakończył działanie");
 
+        List<Simulation> sims = new ArrayList<>();
+        for(int i = 0; i<=1000; i++){
+            GrassField map = new GrassField(10, i);
+            List<Vector2d> positions = new ArrayList<>();
+            positions.add(new Vector2d(10, 10));
+            positions.add(new Vector2d(4, 7));
+            positions.add(new Vector2d(3,5));
+
+            List<MoveDirection> moves = List.of (MoveDirection.FORWARD, MoveDirection.FORWARD
+                    , MoveDirection.RIGHT, MoveDirection.FORWARD, MoveDirection.LEFT, MoveDirection.BACKWARD
+                    , MoveDirection.RIGHT, MoveDirection.FORWARD, MoveDirection.LEFT, MoveDirection.LEFT
+                    , MoveDirection.BACKWARD, MoveDirection.BACKWARD, MoveDirection.RIGHT, MoveDirection.FORWARD);
+            ConsoleMapDisplay follower = new ConsoleMapDisplay();
+            map.registerObserver(follower);
+            Simulation sim = new Simulation(positions, moves, map);
+            sims.add(sim);
+        }
+        SimulationEngine simEng = new SimulationEngine(sims);
+        //simEng.runAsync();
+        try{
+            simEng.runAsyncInThreadPool();
+        }catch(InterruptedException e){
+            System.out.println("Interrupted Exception");
+        }
+        simEng.awaitSimulationsEnd();
+
     }
     public static void run(List<MoveDirection> directions) {
-        /*
-        for(MoveDirection direction : directions){
-            switch(direction){
-                case FORWARD -> {
-                    System.out.println("zwierzak idzie do przodu");
-                }
-                case BACKWARD -> {
-                    System.out.println("zwierzak idzie do tyłu");
-                }
-                case RIGHT -> {
-                    System.out.println("zwierzak idzie w prawo");
-                }
-                case LEFT -> {
-                    System.out.println("Zwierzak idzie w lewo");
-                }
-            }
-        }
+        /*GrassField map1 = new GrassField(10, 1);
+        RectangularMap map2 = new RectangularMap(10, 10, 2);
+        List<Vector2d> positions1 = new ArrayList<>();
+        List<Vector2d> positions2 = new ArrayList<>();
+        positions1.add(new Vector2d(2, 2));
+        positions1.add(new Vector2d(3,4));
+        positions1.add(new Vector2d(3,5));
 
-         */
-        /*
-        List<Vector2d> positions = List.of(new Vector2d(2,2), new Vector2d(3,4));
-        WorldMap map = new GrassField(10);
-        Simulation simulation = new Simulation(positions, directions, map);
-        simulation.run();
-    */
-        /*WorldMap map = new GrassField(10);
-        Animal animal1 = new Animal();
-        Animal animal2 = new Animal(new Vector2d(3, 4));
-        Animal animal3 = new Animal(new Vector2d(3, 5));
-        Animal animal4 = new Animal(new Vector2d(3, 6));
-        Animal animal5 = new Animal(new Vector2d(3, 7));
-        Animal animal6 = new Animal(new Vector2d(3, 8));
-        try {
-            map.place(animal2);
-            map.place(animal1);
-            map.place(animal3);
-            map.place(animal4);
-            map.place(animal5);
-            map.place(animal6);
-        }catch(PositionAlreadyOccupiedException e){
-            System.out.println(e.getMessage());
-        }
-        System.out.println(map);
-        System.out.println(map.getElements());
+        List<MoveDirection> moves1 = List.of (MoveDirection.FORWARD, MoveDirection.FORWARD
+        , MoveDirection.RIGHT, MoveDirection.FORWARD, MoveDirection.LEFT, MoveDirection.BACKWARD
+        , MoveDirection.RIGHT, MoveDirection.FORWARD, MoveDirection.LEFT, MoveDirection.LEFT
+        , MoveDirection.BACKWARD, MoveDirection.BACKWARD, MoveDirection.RIGHT, MoveDirection.FORWARD);
+
+        ConsoleMapDisplay follower1 = new ConsoleMapDisplay();
+        map1.registerObserver(follower1);
+
+        positions2.add(new Vector2d(1, 2));
+        positions2.add(new Vector2d(3,4));
+        positions2.add(new Vector2d(5, 6));
+
+        List<MoveDirection> moves2 = List.of (MoveDirection.FORWARD, MoveDirection.FORWARD
+        , MoveDirection.RIGHT, MoveDirection.FORWARD, MoveDirection.LEFT, MoveDirection.BACKWARD
+        , MoveDirection.RIGHT, MoveDirection.FORWARD, MoveDirection.LEFT, MoveDirection.LEFT
+        , MoveDirection.BACKWARD, MoveDirection.BACKWARD, MoveDirection.RIGHT, MoveDirection.FORWARD);
+
+        ConsoleMapDisplay follower2 = new ConsoleMapDisplay();
+        map2.registerObserver(follower2);
+
+        Simulation sim1 = new Simulation(positions1, moves1, map1);
+        Simulation sim2 = new Simulation(positions2, moves2, map2);
+        List<Simulation> sims = List.of(sim1, sim2);
+        SimulationEngine simEng = new SimulationEngine(sims);
+        simEng.runAsync();
+        simEng.awaitSimulationsEnd();
         */
-         GrassField map = new GrassField(10);
-        Animal animal1 = new Animal();
-        Animal animal2 = new Animal(new Vector2d(3, 4));
-        Animal animal3 = new Animal(new Vector2d(3, 5));
-        ConsoleMapDisplay follower = new ConsoleMapDisplay();
-        map.registerObserver(follower);
-        try{
-            map.place(animal1);
-        }catch(PositionAlreadyOccupiedException e){
-            System.out.println(e.getMessage());
-        }
-
-        try{
-            map.place(animal2);
-        }catch(PositionAlreadyOccupiedException e){
-            System.out.println(e.getMessage());
-        }
-        try{
-            map.place(animal3);
-        }catch(PositionAlreadyOccupiedException e){
-            System.out.println(e.getMessage());
-        }
-
-        map.move(animal1, MoveDirection.FORWARD);
-
 
     }
 

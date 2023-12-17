@@ -1,15 +1,8 @@
 package agh.ics.oop;
-
-
-import agh.ics.oop.OptionsParser;
-import agh.ics.oop.Simulation;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
 import agh.ics.oop.model.*;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import agh.ics.oop.OptionsParser;
 
 import java.util.List;
 

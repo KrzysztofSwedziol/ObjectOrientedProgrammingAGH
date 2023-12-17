@@ -3,7 +3,7 @@ import java.util.List;
 import agh.ics.oop.model.*;
 import java.util.ArrayList;
 
-public class Simulation {
+public class Simulation  implements Runnable {
     private List<Animal> animals;
     private List<MoveDirection> directions;
     private WorldMap map;
@@ -26,7 +26,6 @@ public class Simulation {
         for(int i = 0; i < directions.size(); i++){
             Animal animal = animals.get(i%AnSize);
             map.move(animal, directions.get(i));
-            //System.out.println("Zwierzę " + (i % AnSize) + ": " + animal);
 
         }
     }

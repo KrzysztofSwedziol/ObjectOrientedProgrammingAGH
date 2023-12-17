@@ -1,6 +1,4 @@
 package agh.ics.oop.model;
-import agh.ics.oop.model.MapDirection;
-import agh.ics.oop.model.MoveValidator;
 public class Animal implements WorldElement {
     private MapDirection orientation;
     private Vector2d position;
@@ -33,8 +31,6 @@ public class Animal implements WorldElement {
                     this.position = newPositionBack;
                 }
                 break;
-            //default:
-                //throw new IllegalArgumentException(direction + " is not a legal move specification.");
         }
     }
     @Override
