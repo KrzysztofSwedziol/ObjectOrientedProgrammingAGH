@@ -3,6 +3,9 @@ import java.util.List;
 import agh.ics.oop.model.*;
 import java.util.ArrayList;
 
+import agh.ics.oop.presenter.SimulationPresenter;
+import javafx.application.Platform;
+
 public class Simulation  implements Runnable {
     private List<Animal> animals;
     private List<MoveDirection> directions;
@@ -26,6 +29,12 @@ public class Simulation  implements Runnable {
         for(int i = 0; i < directions.size(); i++){
             Animal animal = animals.get(i%AnSize);
             map.move(animal, directions.get(i));
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println("Wystąpił błąd podczas próby uśpienia wątku: " + e.getMessage());
+            }
 
         }
     }

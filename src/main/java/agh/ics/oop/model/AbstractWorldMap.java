@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 import agh.ics.oop.model.util.MapVisualizer;
+import agh.ics.oop.presenter.SimulationPresenter;
+import javafx.application.Platform;
+
 import java.util.List;
 
 abstract class AbstractWorldMap implements WorldMap {
@@ -12,7 +15,7 @@ abstract class AbstractWorldMap implements WorldMap {
     protected MapVisualizer mapVisualizer;
     protected int width;
     protected int height;
-    protected List<MapChangeListener> observers = new ArrayList<>();
+    protected List<SimulationPresenter> observers = new ArrayList<>();
     protected int ID;
     public boolean place(Animal animal) throws PositionAlreadyOccupiedException {
         Vector2d position = animal.getPosition();
@@ -26,13 +29,17 @@ abstract class AbstractWorldMap implements WorldMap {
     }
     public void move(Animal animal, MoveDirection direction) {
         Vector2d oldPosition = animal.getPosition();
-        Animal animal_check = new Animal(oldPosition);
+        int x = oldPosition.getX();
+        int y = oldPosition.getY();
+        Animal animal_check = new Animal(new Vector2d(x, y));
         animal_check.move(direction, this);
+        animals.remove(oldPosition);
         if (canMoveTo(animal_check.getPosition())) {
             animal.move(direction, this);
-            animals.remove(oldPosition);
             animals.put(animal.getPosition(), animal);
             mapChanged(animal + " Moved to " + direction);
+        }else{
+            animals.put(animal.getPosition(), animal);
         }
 
     }
@@ -58,17 +65,19 @@ abstract class AbstractWorldMap implements WorldMap {
         Boundary boundary = getCurrentBounds();
         return  vizualizer.draw(boundary.lowerLeft(), boundary.upperRight());
     }
-    public void registerObserver(MapChangeListener observer){
+    public void registerObserver(/*MapChangeListener observer*/ SimulationPresenter observer){
 
         observers.add(observer);
     }
-    public void unregisterObserver(MapChangeListener observer){
+    public void unregisterObserver(/*MapChangeListener observer*/ SimulationPresenter observer){
 
         observers.remove(observer);
     }
     public void mapChanged(String message){
-        for(MapChangeListener observer : observers){
-            observer.mapChanged(this, message);
+        for(SimulationPresenter observer : observers){
+            Platform.runLater(() -> {
+                observer.drawMap();
+            });
         }
     }
     public int getID(){
